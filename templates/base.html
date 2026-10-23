@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101c1c">
+    <title>{% block title %}S.K Bright Solar Energy | Solar Solutions Across Uttar Pradesh{% endblock %}</title>
+    <meta name="description" content="{% block description %}S.K Bright Solar Energy provides professional On-Grid, Off-Grid and Hybrid solar solutions, installation, service and maintenance across Uttar Pradesh.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="S.K Bright Solar Energy | Your Energy Partner">
+    <meta property="og:description" content="Professional solar solutions, installation and service across Uttar Pradesh.">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/solar-rooftop.jpg' %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101c1c'/%3E%3Cpath d='M32 12v8m0 24v8M12 32h8m24 0h8M18 18l6 6m16 16 6 6m0-28-6 6M24 40l-6 6' stroke='%23f4bd54' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23f4bd54'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SolarEnergyCompany",
+        "name": "S.K Bright Solar Energy",
+        "description": "Solar installation, solutions, service and maintenance across Uttar Pradesh.",
+        "telephone": "+917398406469",
+        "areaServed": "Uttar Pradesh, India",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Ramnagar, Varanasi",
+          "addressRegion": "Uttar Pradesh",
+          "addressCountry": "IN"
+        }
+      }
+    </script>
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+    <script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}" defer></script>
+    <script src="{% static 'js/site.js' %}" defer></script>
+    {% block extra_scripts %}{% endblock %}
+  </body>
+</html>

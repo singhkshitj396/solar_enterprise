@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Appointments | S.K Bright Solar Energy{% endblock %}
+{% block body %}
+<main class="staff-dashboard">
+  <header class="staff-dashboard-header">
+    <a class="brand" href="{% url 'home' %}"><span class="brand-mark" aria-hidden="true">☼</span><span class="brand-copy"><strong>S.K BRIGHT</strong><small>SOLAR ENERGY</small></span></a>
+    <div class="staff-account"><span>{{ request.user.get_full_name|default:request.user.username }}</span><form method="post" action="{% url 'staff-logout' %}">{% csrf_token %}<button type="submit">Sign out</button></form></div>
+  </header>
+  <div class="staff-dashboard-content">
+    <div class="staff-dashboard-title"><div><p class="eyebrow"><span></span> BRANCH OPERATIONS</p><h1>Site visit<br><em>appointments.</em></h1></div><a class="button button-dark" href="/admin/">Manage branches & staff <span aria-hidden="true">↗</span></a></div>
+    {% if messages %}<div class="message-stack" aria-live="polite">{% for message in messages %}<div class="booking-message">{{ message }}</div>{% endfor %}</div>{% endif %}
+    <div class="staff-count"><strong>{{ appointments|length }}</strong><span>appointment{{ appointments|length|pluralize }} in this view</span></div>
+    <div class="staff-appointments">
+      {% for appointment in appointments %}
+        <article class="staff-appointment">
+          <div class="staff-appointment-date"><span>{{ appointment.preferred_visit|date:"d" }}</span><small>{{ appointment.preferred_visit|date:"M Y · H:i" }}</small></div>
+          <div class="staff-appointment-customer"><h2>{{ appointment.customer_name }}</h2><p><a href="tel:{{ appointment.phone }}">{{ appointment.phone }}</a> · <a href="mailto:{{ appointment.email }}">{{ appointment.email }}</a></p><p>{{ appointment.address }}, {{ appointment.city }}{% if appointment.branch %}<span> · {{ appointment.branch.name }}</span>{% endif %}</p></div>
+          <div class="staff-appointment-system"><span>{{ appointment.get_system_type_display }}</span><small>{% if appointment.capacity %}{{ appointment.capacity }}{% else %}Capacity not specified{% endif %}</small></div>
+          <form class="staff-status-form" method="post" action="{% url 'update-appointment-status' appointment.pk %}">
+            {% csrf_token %}
+            <label class="visually-hidden" for="status-{{ appointment.pk }}">Appointment status for {{ appointment.customer_name }}</label>
+            <select name="status" id="status-{{ appointment.pk }}">{% for value,label in status_choices %}<option value="{{ value }}" {% if appointment.status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+            <button type="submit">Save</button>
+          </form>
+          {% if appointment.message %}<p class="staff-appointment-message">{{ appointment.message }}</p>{% endif %}
+        </article>
+      {% empty %}
+        <div class="staff-empty"><span>✳</span><h2>No appointments yet</h2><p>New customer visit requests for your branch will appear here.</p></div>
+      {% endfor %}
+    </div>
+    {% if request.user.is_superuser %}<p class="staff-admin-note">You are signed in as super-admin. Branches, staff accounts and appointment records can also be managed in the admin area.</p>{% endif %}
+  </div>
+</main>
+{% endblock %}

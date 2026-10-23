@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Staff Sign In | S.K Bright Solar Energy{% endblock %}
+{% block description %}Secure staff sign in for S.K Bright Solar Energy branch teams.{% endblock %}
+{% block body %}
+<main class="staff-access">
+  <div class="staff-access-top"><a class="brand" href="{% url 'home' %}"><span class="brand-mark" aria-hidden="true">☼</span><span class="brand-copy"><strong>S.K BRIGHT</strong><small>SOLAR ENERGY</small></span></a><a class="text-link" href="{% url 'home' %}">Back to website <span aria-hidden="true">↗</span></a></div>
+  <section class="staff-login-card">
+    <p class="eyebrow"><span></span> BRANCH TEAM</p>
+    <h1>Welcome<br><em>back.</em></h1>
+    <p class="staff-login-lede">Sign in to view and manage appointments assigned to your branch.</p>
+    {% if form.errors %}<div class="form-error-summary" role="alert">The username or password didn’t match. Please try again.</div>{% endif %}
+    <form method="post" class="staff-login-form">
+      {% csrf_token %}
+      <div class="form-group"><label for="id_username">Username</label><input type="text" name="username" id="id_username" autocomplete="username" autofocus required></div>
+      <div class="form-group"><label for="id_password">Password</label><input type="password" name="password" id="id_password" autocomplete="current-password" required></div>
+      <input type="hidden" name="next" value="{{ next }}">
+      <button class="button button-dark" type="submit">Sign in <span aria-hidden="true">↗</span></button>
+    </form>
+    <p class="staff-login-help">Need access? Ask your S.K Bright administrator to create your account.</p>
+  </section>
+  <p class="staff-access-footer">S.K BRIGHT SOLAR ENERGY · INTERNAL ACCESS</p>
+</main>
+{% endblock %}
